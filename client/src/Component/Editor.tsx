@@ -3,18 +3,17 @@ import React, { useEffect } from 'react';
 import { useQuill } from 'react-quilljs';
 import 'quill/dist/quill.snow.css';
 import { io } from 'socket.io-client';
-import { RangeStatic } from 'quill';
 
 const Editor = () => {
   const { quill, quillRef } = useQuill({ theme: 'snow' });
   const socket = io('http://192.168.87.171:4000');
   let cursor:any;
+  
 
   useEffect(() => {
-    const handleTextChange = (delta:any, oldDelta:any, source:any) => {
+    const handleTextChange = () => {
      
         cursor=quill?.getSelection()
-        console.log(delta)
 
         socket.emit('text-change', quill?.getContents());
     
@@ -24,17 +23,14 @@ const Editor = () => {
       quill.on('text-change', handleTextChange);
 
 
-      socket.on('some-change-text', (data) => {
-        // Temporarily disable 'text-change' event handling while applying changes received from the server
+      socket.on('receive-text', (data) => {
         quill.off('text-change', handleTextChange);
 
-
-        // Apply the received content
         quill.setContents(data);
+
 
         quill?.setSelection(cursor)
 
-        // Re-enable 'text-change' event handling
         quill.on('text-change', handleTextChange);
       });
     }

@@ -14,17 +14,13 @@ app.use(cors({origin:["http://192.168.87.171:3001/","http://localhost:3001"],cre
 
 socketIO.on("connection",socket=>{
     socket.join("1")
-    socket.on("text-change",data=>{
-        socket.to("1").emit("some-change-text",data)
+    socket.on("text-change",(data)=>{
+        console.log(data)
+        socket.to("1").emit("receive-text",data)
     })
 })
 
 
-
-app.get("/",(req,res)=>{
-    
-    res.send("from server")
-})
 
 
 Server.listen(PORT,()=>console.log("server started at "+PORT))

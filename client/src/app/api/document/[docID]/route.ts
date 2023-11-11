@@ -16,11 +16,12 @@ export const GET=async(req:NextApiRequest)=>{
       });
     }
     if (!id)return NextResponse.json({message:"failed"})
-    /* const docInCache=redis?.get(id);
-    if (docInCache){
-      return NextResponse.json({document:docInCache})
-      
-    } */
+     const docInCache=await redis?.get(id)
+
+     if (docInCache){
+      console.log("here")
+      return NextResponse.json({...docInCache})
+    }  
     const doc=await prisma.document.findUnique({
       where:{
         id:id
@@ -28,9 +29,8 @@ export const GET=async(req:NextApiRequest)=>{
       
     })
     if (!doc) return NextResponse.json({message:"failed"})
-    redis?.set(id,JSON.stringify(doc))
+    redis?.set(id,JSON.stringify({...doc}))
   
-    console.log("from here")
     
     return NextResponse.json({...doc})
 }

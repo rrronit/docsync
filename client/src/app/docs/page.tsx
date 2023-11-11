@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
 
-interface Document {
+interface document {
   id: string;
   title: string;
 }
 
 const Page = () => {
-  const docs: Document[] | null = JSON.parse(
+  const docs: document[] | null = JSON.parse(
     localStorage.getItem("docs") as string
   );
 

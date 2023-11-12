@@ -24,10 +24,11 @@ const Editor = () => {
           title,
           content:quill?.getContents()
         }
-        
+
   
         socket.emit("text-change", document);
       });
+      
 
       socket.on("receive-text", (data) => {
         quill.off("text-change", handleTextChange);

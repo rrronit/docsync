@@ -74,12 +74,16 @@ const Editor = () => {
     fetchData();
   }, [params.docsID, quill]);
   return (
-    <div style={{ height: "100vh" }}>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <div ref={quillRef} />
-      )}
+    <div className="text-white px-5">
+      <div className="grid justify-center pt-5 h-[85vh]">
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <div className="bg-gray-800 p-4 rounded-md">
+            <div ref={quillRef} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

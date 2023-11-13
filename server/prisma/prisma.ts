@@ -1,6 +1,11 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from "@prisma/client";
 
+let prismaInstance: PrismaClient | undefined;
 
-export const prisma = new PrismaClient()
+if (process.env.NODE_ENV !== 'production' && !prismaInstance) {
+  prismaInstance = new PrismaClient();
+}
 
-module.exports = prisma
+const prisma = prismaInstance || new PrismaClient();
+
+export default prisma;

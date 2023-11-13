@@ -74,3 +74,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+.ql-snow .ql-stroke {
+stroke:white !important
+
+}
+.ql-snow .ql-fill{
+  fill:white !important
+}
+.ql-snow .ql-picker.ql-header .ql-picker-label::before{
+  color: white !important;
+}
+.ql-snow .ql-picker.ql-size .ql-picker-label::before{
+  color: white !important;
+  
+}

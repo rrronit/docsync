@@ -11,7 +11,7 @@ import http from "http";
 import cors from "cors";
 import socket from "socket.io";
 import { Redis } from "@upstash/redis";
-import {prisma} from "./prisma/prisma"
+import prisma from "./prisma/prisma";
 
 dotenv.config();
 
@@ -30,6 +30,7 @@ const socketIO = new socket.Server(Server, {
     credentials: true,
   },
 });
+
 const PORT = 4000;
 app.use(
   cors({

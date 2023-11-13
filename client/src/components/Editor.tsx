@@ -12,7 +12,8 @@ const Editor = () => {
   const [loading, setLoading] = useState(true)
   const [title, setTitle] = useState("");
   const { quill, quillRef } = useQuill({ theme: "snow" });
-  const socket = io("http://192.168.24.171:4000");
+
+  const socket = io("http://localhost:4000");
   let cursor: RangeStatic | undefined | null;
 
   useEffect(() => {
@@ -58,7 +59,7 @@ const Editor = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-
+   
       await fetch(`/api/document/` + params.docsID).then(async res => {
         if (!res.ok) {
           router.replace("/");
@@ -75,6 +76,7 @@ const Editor = () => {
   }, [params.docsID, quill]);
   return (
     <div className="text-white px-5">
+      
       <div className="grid justify-center pt-5 h-[85vh]">
         {loading ? (
           <div>Loading...</div>

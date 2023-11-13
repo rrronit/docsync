@@ -1,9 +1,8 @@
 import prisma from "@/lib/prisma";
 import { Redis } from "@upstash/redis";
-import { NextApiRequest, NextApiResponse } from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (req: NextApiRequest) => {
+export const GET = async (req: NextRequest) => {
   try {
     const id = req.url?.split("/").at(5);
 

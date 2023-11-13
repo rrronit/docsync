@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PopoverTrigger, PopoverContent, Popover } from "@/components/ui/popover"
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -14,13 +14,21 @@ interface document {
 }
 export default function Component() {
   const router = useRouter()
-  const docs: document[] = JSON.parse(
-    localStorage.getItem("docs") as string
-  ) || [];
+  
 
   const [title, setTitle] = useState("");
-  const [documents, setDocuments] = useState(docs);
+  const [documents, setDocuments] = useState<document[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+
+  useEffect(()=>{
+    const docs: document[] = JSON.parse(
+      localStorage.getItem("docs") as string
+    ) || [];
+    setDocuments(docs)
+
+  },[])
+
   const handleClick = (e: any) => {
     e.preventDefault()
     setIsLoading(true);
@@ -36,7 +44,7 @@ export default function Component() {
         createdAt: new Date().toLocaleString()
       };
 
-      const updatedList = [...documents, newDoc]
+      const updatedList:document[] = [newDoc,...documents]
       setDocuments(updatedList)
       localStorage.setItem("docs", JSON.stringify(updatedList))
       router.push("/" + id)
@@ -103,7 +111,7 @@ export default function Component() {
         </div>
         {documents?.map(document => {
           return (
-            <Link href={document.id}>
+            <Link href={document.id} key={document.id}>
               <div className="flex flex-col items-center p-6 rounded-lg border border-gray-900 bg-gray-700 hover:bg-gray-600 transition-all ease-in-out transform hover:scale-105">
                 <svg
                   className=" h-10 w-10 mb-4 text-white"

@@ -65,7 +65,7 @@ socketIO.on("connection", (socket) => {
             id:id
           },
           data:{
-            content:doc.content
+            content:JSON.stringify(doc.content)
           }
         }) 
 

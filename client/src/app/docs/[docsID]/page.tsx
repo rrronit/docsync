@@ -1,11 +1,11 @@
 
-import Editor from "@/Component/Editor";
+import Editor from "@/components/Editor";
 
 
-  
-const  Page = () => {
 
-  
+const Page = () => {
+
+
   return (
     <div>
       <Editor />

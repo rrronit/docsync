@@ -1,12 +1,21 @@
+interface docType{
+  id:string;
+  title:string;
+  content:any
+}
+
+
 import express from "express";
 import dotenv from "dotenv";
 import http from "http";
 import cors from "cors";
 import socket from "socket.io";
 import { Redis } from "@upstash/redis";
+import {prisma} from "./prisma/prisma"
+
 dotenv.config();
 
-let redis: Redis | null=null;
+let redis: Redis | null = null;
 if (process.env.REDIS_TOKEN && process.env.REDIS_URL) {
   redis = new Redis({
     url: process.env.REDIS_URL,
@@ -28,13 +37,41 @@ app.use(
     credentials: true,
   })
 );
+
+const rooms: Map<string, string[]> = new Map();
+
 socketIO.on("connection", (socket) => {
-  socket.join("1");
-  socket.on("text-change",async (data) => {
- console.log(data.content)
-   if (redis) await redis.set(data.id,JSON.stringify(data))  
+  socket.on("join-room", (id) => {
+    socket.join(id);
+    const users = rooms.get(id) || [];
+    users.push(socket.id);
+    rooms.set(id, users);
+  });
+
+  socket.on("text-change", async (data) => {
+    console.log(data)
     socket.to("1").emit("receive-text", data);
+    if (redis) await redis.set(data.id, JSON.stringify(data));
+  });
+  socket.on("disconnect", () => {
+ 
+    rooms.forEach(async(room,id) => {
+      rooms.set(id,room.filter((user) => user !== socket.id));
+      if (room.length==0){
+        const doc:docType=await redis?.get(id) || {id:"",title:"",content:""}
+        
+        await prisma.document.update({
+          where:{
+            id:id
+          },
+          data:{
+            content:doc.content
+          }
+        }) 
+
+        await redis?.expire(id,0)
+      }
+    }); 
   });
 });
-
 Server.listen(PORT, () => console.log("server started at " + PORT));

@@ -20,8 +20,8 @@ export default function Component() {
 
   const [title, setTitle] = useState("");
   const [documents, setDocuments] = useState(docs);
-  const handleClick = (e:HTMLFormElement) => {
-    e.preventDefault()
+  const handleClick = (e:any) => {
+     e.preventDefault()
     fetch("/api/document", {
       method: "post",
       body: JSON.stringify({ title }),

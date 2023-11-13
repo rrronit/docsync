@@ -26,14 +26,14 @@ const app = express();
 const Server = new http.Server(app);
 const socketIO = new socket.Server(Server, {
   cors: {
-    origin: ["http://192.168.14.171:3000", "http://localhost:3000"],
+    origin: ["http://192.168.24.171:3000", "http://localhost:3000"],
     credentials: true,
   },
 });
 const PORT = 4000;
 app.use(
   cors({
-    origin: ["http://192.168.14.171:3000/", "http://localhost:3000"],
+    origin: ["http://192.168.24.171:3000/", "http://localhost:3000"],
     credentials: true,
   })
 );
@@ -49,8 +49,7 @@ socketIO.on("connection", (socket) => {
   });
 
   socket.on("text-change", async (data) => {
-    console.log(data)
-    socket.to("1").emit("receive-text", data);
+    socket.to(data.id).emit("receive-text", data);
     if (redis) await redis.set(data.id, JSON.stringify(data));
   });
   socket.on("disconnect", () => {

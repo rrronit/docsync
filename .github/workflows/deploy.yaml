@@ -27,6 +27,7 @@ jobs:
   
       - name: setup ssh
         run: |
+          mkdir ~/.ssh
           mkdir ./secret
           echo "${{ secrets.SSH_PRIVATE_KEY }}" >> ./secret/key.pem
           chmod 600 ./secret/key.pem

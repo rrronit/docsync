@@ -30,6 +30,6 @@ jobs:
           mkdir ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" >> ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa 54.167.223.77 >> ~/.ssh/known_hosts
-          scp -i ~/.ssh/id_rsa docker-compose.yaml ubuntu@54.167.223.77: 
+          ssh-keyscan -t rsa 3.80.61.51 >> ~/.ssh/known_hosts
+          scp -i ~/.ssh/id_rsa docker-compose.yaml ubuntu@3.80.61.51: 
           ssh -i ~/.ssh/id_rsa ubuntu@54.167.223.77 "docker pull rrrronit/docsync && docker-compose up -d"

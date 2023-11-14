@@ -1,14 +1,15 @@
-name:"deploy"
+name: deploy
+
 on:
   push:
     branches:
-        - main
-      paths:
-        - server/*
+      - main
+    paths:
+      - server/*
 
 jobs:
   deployment:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -22,7 +23,6 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push rrrrronit/docsync 
 
-
       - name: setup ssh
         run: |
           mkdir ~/.ssh
@@ -31,4 +31,3 @@ jobs:
           ssh-keyscan -t rsa 54.167.223.77 >> ~/.ssh/known_hosts
           scp -i ~/.ssh/id_rsa docker-compose.yaml ubuntu@54.167.223.77: 
           ssh -i ~/.ssh/id_rsa ubuntu@54.167.223.77 "docker pull rrrronit/docsync && docker-compose up -d"
-        

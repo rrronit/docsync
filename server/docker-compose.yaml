@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  backend:
+    image: rrrrronit/docsync
+    ports:
+      - 4000:4000
+    environment:
+      REDIS_URL: ${REDIS_URL}
+      REDIS_TOKEN: ${REDIS_TOKEN}
+      DATABASE_URL: ${DATABASE_URL}
+    

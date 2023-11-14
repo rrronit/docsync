@@ -1,0 +1,36 @@
+name:"deploy"
+on:
+  push:
+    branches:
+        -master
+      paths:
+        -server/*
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: setup docker
+        uses: docker/setup@docker@v2
+      
+      - name: build and push docker images
+        run: |
+          docker build -t rrrrronit/docsync -f server/docker/Dockerfile  ./server
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker push rrrrronit/docsync 
+
+
+      - name: setup ssh
+        run: |
+          mkdir ~/.ssh
+          echo $SSH_PRIVATE_KEY >> ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa 54.167.223.77 >> ~/.ssh/known_hosts
+        run: |
+          
+          scp ~i ~/.ssh/id_rsa docker-compose.yaml ubuntu@54.167.223.77: 
+          ssh -i ~/.ssh/id_rsa ubuntu@54.167.223.77 "docker pull rrrronit/docsync && docker-compose up -d"
+        

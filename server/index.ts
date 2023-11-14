@@ -12,7 +12,6 @@ import cors from "cors";
 import socket from "socket.io";
 import { Redis } from "@upstash/redis";
 import prisma from "./prisma/prisma";
-
 dotenv.config();
 
 let redis: Redis | null = null;

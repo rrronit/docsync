@@ -13,11 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: setup docker
-        uses: docker/setup-docker@v2 
+     
       
       - name: build and push docker images
         run: |
+          sudo snap install docker 
           docker build -t rrrrronit/docsync -f server/docker/Dockerfile  ./server
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push rrrrronit/docsync 

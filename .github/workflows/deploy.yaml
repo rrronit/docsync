@@ -27,11 +27,11 @@ jobs:
   
       - name: setup ssh
         run: |
-          mkdir ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" >> ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          mkdir ./secret
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" >> ./secret/key.pem
+          chmod 600 ~/.secret/key.pem
+          chmod 600 ~/.secret
           ssh-keyscan -t rsa 3.80.61.51 >> ~/.ssh/known_hosts
-          chmod 600 ~/.ssh
           
-          scp -i ~/.ssh/id_rsa docker-compose.yaml ubuntu@3.80.61.51: 
-          ssh -i ~/.ssh/id_rsa ubuntu@3.80.61.51 "docker pull ${{secrets.DOCKER_USERNAME}}/docsync && docker-compose up -d"
+          scp -i ./secret/key.pem docker-compose.yaml ubuntu@3.80.61.51: 
+          ssh -i ./secret/key.pem ubuntu@3.80.61.51 "docker pull ${{secrets.DOCKER_USERNAME}}/docsync && docker-compose up -d"

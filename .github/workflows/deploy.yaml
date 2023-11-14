@@ -28,10 +28,9 @@ jobs:
       - name: setup ssh
         run: |
           mkdir ~/.ssh
-          mkdir ./secret
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" >> ./secret/key.pem
-          chmod 600 ./secret/key.pem
-          chmod 600 ./secret
+          
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" >> key.pem
+          chmod 600 key.pem
           ssh-keyscan -t rsa 3.80.61.51 >> ~/.ssh/known_hosts
           
           scp -i ./secret/key.pem docker-compose.yaml ubuntu@3.80.61.51: 

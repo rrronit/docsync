@@ -70,7 +70,7 @@ const Editor = () => {
       }
       socket.disconnect();
     };
-  }, [quill, params.docsID, title]);
+  }, [quill, params.docsID, title,loading]);
 
   useEffect(() => {
     const fetchData = async () => {

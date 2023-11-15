@@ -4,7 +4,8 @@ on:
   push:
     branches:
       - main
-    path: 
+    paths:
+      - .github/*
       - server/*
    
 

@@ -25,7 +25,7 @@ const app = express();
 const Server = new http.Server(app);
 const socketIO = new socket.Server(Server, {
   cors: {
-    origin: ["http://192.168.24.171:3000", "http://localhost:3000"],
+    origin: "https://docsync.vercel.app",
     credentials: true,
   },
 });
@@ -33,7 +33,7 @@ const socketIO = new socket.Server(Server, {
 const PORT = 4000;
 app.use(
   cors({
-    origin: ["http://192.168.24.171:3000/", "http://localhost:3000"],
+    origin:"https://docsync.vercel.app",
     credentials: true,
   })
 );

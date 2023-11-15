@@ -39,7 +39,7 @@ jobs:
 
           echo "${{ secrets.SSH_PRIVATE_KEY }}" >> key.pem
           chmod 600 key.pem
-          ssh-keyscan -t rsa ${{secrets.SERVER_IP}} >> ~/.ssh/known_hosts
+          ssh-keyscan -t rsa ec2-54-226-83-195.compute-1.amazonaws.com >> ~/.ssh/known_hosts
           
           scp -i key.pem .env server/docker-compose.yaml ubuntu@3.80.61.51: 
-          ssh -i key.pem ubuntu@${{secrets.SERVER_IP}} "sudo docker pull ${{secrets.DOCKER_USERNAME}}/docsync && sudo docker-compose up -d"
+          ssh -i key.pem ubuntu@$ec2-54-226-83-195.compute-1.amazonaws.com "sudo docker pull ${{secrets.DOCKER_USERNAME}}/docsync && sudo docker-compose up -d"

@@ -42,4 +42,4 @@ jobs:
           ssh-keyscan -t rsa ec2-54-226-83-195.compute-1.amazonaws.com >> ~/.ssh/known_hosts
           
           scp -i key.pem .env server/docker-compose.yaml ubuntu@ec2-54-226-83-195.compute-1.amazonaws.com: 
-          ssh -i key.pem ubuntu@ec2-54-226-83-195.compute-1.amazonaws.com "sudo docker pull ${{secrets.DOCKER_USERNAME}}/docsync:latest && sudo docker kill $(sudo docker ps -qa) && sudo docker-compose up -d"
+          ssh -i key.pem ubuntu@ec2-54-226-83-195.compute-1.amazonaws.com "sudo docker pull ${{secrets.DOCKER_USERNAME}}/docsync:latest && sudo docker kill $(sudo docker ps -qa) || true && sudo docker-compose up -d"

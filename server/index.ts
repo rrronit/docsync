@@ -37,9 +37,7 @@ app.use(
     credentials: true,
   })
 );
-app.use("/",(req,res)=>{
-  res.send("hello from server")
-})
+
 const rooms: Map<string, string[]> = new Map();
 
 socketIO.on("connection", (socket) => {

@@ -13,7 +13,7 @@ const Editor = () => {
   const [title, setTitle] = useState("");
   const { quill, quillRef } = useQuill({ theme: "snow" });
 
-  const socket = io("http://localhost:4000");
+  const socket = io("http://docsync.ronit.live");
   let cursor: RangeStatic | undefined | null;
 
   useEffect(() => {

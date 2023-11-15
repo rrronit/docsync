@@ -33,7 +33,9 @@ const socketIO = new socket.Server(Server, {
 const PORT = 4000;
 app.use(
   cors({
-    origin:"https://docsync.vercel.app",
+
+    origin: "https://docsync.vercel.app",
+    
     credentials: true,
   })
 );

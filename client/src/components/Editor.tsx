@@ -29,9 +29,24 @@ const Editor = () => {
     };
 
     socket.on("connect", () => {
-      console.log("Connected to the server!");
-
       const id = params.docsID;
+
+      const allDocs:{
+        id: string,
+        title: string,
+        createdAt: string
+      }[]= JSON.parse(localStorage.getItem("docs") as string) || []
+      const current=allDocs.filter(data=>data.id===id) 
+      if (!current){
+        const newDoc={
+          id,
+          title,
+          createdAt:new Date().toLocaleString()
+        }
+        const updatedList = [newDoc,allDocs]
+        localStorage.setItem("docs", JSON.stringify(updatedList))
+
+      }
       socket.emit("join-room", id);
     });
 

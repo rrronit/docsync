@@ -18,7 +18,6 @@ const Editor = () => {
 
   useEffect(() => {
     const handleTextChange = () => {
-      console.log(quill?.getContents())
       cursor = quill?.getSelection();
       const document = {
         id: params.docsID,
@@ -37,13 +36,13 @@ const Editor = () => {
         createdAt: string
       }[]= JSON.parse(localStorage.getItem("docs") as string) || []
       const current=allDocs.filter(data=>data.id===id) 
-      if (!current){
+      if (current.length===0){
         const newDoc={
           id,
           title,
           createdAt:new Date().toLocaleString()
         }
-        const updatedList = [newDoc,allDocs]
+        const updatedList = [newDoc,...allDocs]
         localStorage.setItem("docs", JSON.stringify(updatedList))
 
       }

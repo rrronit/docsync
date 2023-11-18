@@ -10,6 +10,7 @@ export const POST=async(req:NextRequest)=>{
         title:title,
         content:"",
     }})
+    await redis?.set(doc.id, JSON.stringify(doc));
 
     return NextResponse.json({...doc})
     

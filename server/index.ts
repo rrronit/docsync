@@ -70,7 +70,7 @@ socketIO.on("connection", (socket) => {
           }
         }) 
 
-        await redis?.expire(id,0)
+        await redis?.expire(id,30)
       }
     }); 
   });

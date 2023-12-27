@@ -96,6 +96,7 @@ const Editor = () => {
           <div>Loading...</div>
         ) : (
           <div className="bg-gray-800 p-4 rounded-md">
+            <center><h2>{title}</h2></center>
             <div ref={quillRef} />
           </div>
         )}

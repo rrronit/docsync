@@ -75,4 +75,9 @@ socketIO.on("connection", (socket) => {
     }); 
   });
 });
+
+
+app.get("/health",(req,res)=>{
+  res.send("perfect")
+})
 Server.listen(PORT, () => console.log("server started at " + PORT));
